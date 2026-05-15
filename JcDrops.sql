@@ -8,6 +8,8 @@ DROP TABLE Usuario_Rol;
 
 DROP TABLE Pedido;
 
+DROP TABLE Ingrediente;
+
 #PROCEDIMIENTOS
 DROP PROCEDURE IF EXISTS Registrar_Usuario;
 DROP PROCEDURE IF EXISTS Editar_Perfil_Usuario;

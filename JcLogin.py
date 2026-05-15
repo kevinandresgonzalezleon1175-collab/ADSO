@@ -35,14 +35,14 @@ def registrar():
         conn = db_conexion.obtener_conexion()
         if conn:
             cursor = conn.cursor()
-            # Quitamos el id_rol de la llamada; la DB lo asigna sola
-            cursor.callproc('Registrar_Usuario', (num, em, nom, pw, dir))
+            # Pasamos un 1 por defecto (Rol de Cliente) para cumplir con los parámetros del procedimiento
+            cursor.callproc('Registrar_Usuario', (num, em, nom, pw, dir, 1))
             conn.commit()
             print(":3 Registro exitoso.")
             conn.close()
             
-            # Pasamos al main solo con lo necesario
-            JcMain.menu_principal(num, nom)
+            # Entra al menú principal con Rol = 1 (Cliente)
+            JcMain.menu_principal(num, nom, 1)
             
     except Exception as e:
         print(f"X Error al registrar: {e}")
@@ -59,16 +59,17 @@ def login():
         if conn:
             cursor = conn.cursor(dictionary=True)
             
-            # Traemos solo Numero y Nombre
-            query = "SELECT Numero, Nombre FROM Usuario WHERE Numero = %s AND Contrasenia = %s"
+            # CORRECCIÓN AQUÍ: Agregamos 'id_Rol' a la consulta SQL
+            query = "SELECT Numero, Nombre, id_Rol FROM Usuario WHERE Numero = %s AND Contrasenia = %s"
             cursor.execute(query, (doc, clave))
             usuario = cursor.fetchone()
             
             if usuario:
                 print(f"¡Bienvenido de nuevo {usuario['Nombre']}!")
                 conn.close()
-                # Salto al módulo principal
-                JcMain.menu_principal(usuario['Numero'], usuario['Nombre'])
+                
+                # CORRECCIÓN AQUÍ: Enviamos los 3 datos requeridos por JcMain
+                JcMain.menu_principal(usuario['Numero'], usuario['Nombre'], usuario['id_Rol'])
             else:
                 print("X Credenciales incorrectas.")
                 conn.close()
