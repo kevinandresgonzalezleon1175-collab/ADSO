@@ -1,0 +1,15 @@
+USE CasasJcAlpha
+
+DROP DATABASE IF EXISTS CasasJcAlpha
+
+#TABLAS
+DROP TABLE Usuario;
+DROP TABLE Usuario_Rol;
+
+DROP TABLE Pedido;
+
+#PROCEDIMIENTOS
+DROP PROCEDURE IF EXISTS Registrar_Usuario;
+DROP PROCEDURE IF EXISTS Editar_Perfil_Usuario;
+DROP PROCEDURE IF EXISTS Desactivar_Usuario;
+DROP PROCEDURE IF EXISTS Eliminar_Todo_Usuario;
